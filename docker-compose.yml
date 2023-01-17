@@ -42,6 +42,13 @@ services:
       context: .
       dockerfile: ./php/Dockerfile
     container_name: artisan
+    environment:
+      - DB_CONNECTION=pgsql
+      - DB_HOST=pgsql
+      - DB_PORT=${DB_PORT}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
     volumes:
       - ./app:/var/www/html
     working_dir: /var/www/html
