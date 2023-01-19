@@ -13,10 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('fornecedores', function (Blueprint $table) {
+        Schema::create('produto_detalhes', function (Blueprint $table) {
             $table->id();
-            $table->string('nome', 50);
+            $table->unsignedBigInteger('produto_id');
+            $table->float('comprimento', 8, 2);
+            $table->float('largura', 8, 2);
+            $table->float('altura', 8, 2);
             $table->timestamps();
+
+            $table->foreign('produto_id')->references('id')->on('produtos');
+            $table->unique('produto_id');
         });
     }
 
@@ -27,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fornecedores');
+        Schema::dropIfExists('produto_detalhes');
     }
 };
