@@ -1,4 +1,9 @@
 {{ $slot }}
+<div>
+    <pre>
+        {{ print_r($errors) }}
+    </pre>
+</div>
 <form action={{ route('site.contato') }} method="POST">
     @csrf
     <input name="nome" type="text" placeholder="Nome" class="{{ $borda }}">
