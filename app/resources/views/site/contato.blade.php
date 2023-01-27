@@ -10,7 +10,10 @@
 
         <div class="informacao-pagina">
             <div class="contato-principal">
-                @component('site.layouts._components.form_contato', ['borda' => 'borda-preta'])
+                @component('site.layouts._components.form_contato', [
+                    'borda' => 'borda-preta',
+                    'motivoContato' => $motivoContato
+                    ])
                     <p>Nosso tempo medio de resposta e de 48 horas</p>
                 @endcomponent
             </div>
