@@ -20,7 +20,9 @@ use Illuminate\Support\Facades\Route;
 //     echo "Contato - $nome $sobrenome_id";
 // })->where('sobrenome_id', '[0-9]+')->where('nome', '[A-Za-z]+');
 
-Route::get('/', [PrincipalController::class, 'principal'])->name('site.index');
+Route::middleware('App\Http\Middleware\LogAcessoMiddleware')
+    ->get('/', [PrincipalController::class, 'principal'])
+    ->name('site.index');
 Route::get('/sobre-nos', [SobreNosController::class, 'sobreNos'])->name('site.sobrenos');
 Route::get('/contato', [ContatoController::class, 'contato'])->name('site.contato');
 Route::post('/contato', [ContatoController::class, 'salvar'])->name('site.contato');
