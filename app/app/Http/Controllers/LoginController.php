@@ -10,7 +10,7 @@ class LoginController extends Controller
     public function index(Request $request) {
         $error = $request->get('error');
 
-        return view('site.login', ['titutlo' => 'Login', 'error' => $error]);
+        return view('site.login', ['titulo' => 'Login', 'error' => $error]);
     }
 
     public function autenticar(Request $request) {
@@ -34,9 +34,18 @@ class LoginController extends Controller
         $user = User::where('email', $usario)->where('password', $password)->get()->first();
 
         if (isset($user->name)) {
-            return print_r($user);
+
+            session_start();
+            $_SESSION['email']  = $user->email;
+            $_SESSION['nome']   = $user->name;
+            return redirect()->route('app.home');
         }
 
         return redirect()->route('site.login', ['error' => 'Usuario inexistente.']);
+    }
+
+    public function sair() {
+        session_destroy();
+        return redirect()->route('site.index');
     }
 }
