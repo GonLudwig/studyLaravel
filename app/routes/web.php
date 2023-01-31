@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ContatoController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PrincipalController;
 use App\Http\Controllers\Rota1Controller;
 use App\Http\Controllers\SobreNosController;
@@ -21,10 +22,14 @@ use Illuminate\Support\Facades\Route;
 // })->where('sobrenome_id', '[0-9]+')->where('nome', '[A-Za-z]+');
 
 Route::get('/', [PrincipalController::class, 'principal'])->name('site.index');
+
 Route::get('/sobre-nos', [SobreNosController::class, 'sobreNos'])->name('site.sobrenos');
+
 Route::get('/contato', [ContatoController::class, 'contato'])->name('site.contato');
 Route::post('/contato', [ContatoController::class, 'salvar'])->name('site.contato');
-Route::get('/login', function(){ return 'Login'; })->name('site.login');
+
+Route::get('/login/{error?}', [LoginController::class, 'index'])->name('site.login');
+Route::post('/login', [LoginController::class, 'autenticar'])->name('site.login');
 
 Route::middleware('autenticacao')->prefix('/app')->group(function () {
     Route::get('/clientes', function(){ return 'Clientes'; })->name('app.clientes');

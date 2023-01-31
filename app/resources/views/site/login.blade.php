@@ -5,17 +5,20 @@
 @section('conteudo')
     <div class="conteudo-pagina">
         <div class="titulo-pagina">
-            <h1>Entre em contato conosco</h1>
+            <h1>Login</h1>
         </div>
 
         <div class="informacao-pagina">
-            <div class="contato-principal">
-                @component('site.layouts._components.form_contato', [
-                    'borda' => 'borda-preta',
-                    'motivoContato' => $motivoContato
-                    ])
-                    <p>Nosso tempo medio de resposta e de 48 horas</p>
-                @endcomponent
+            <div style="width: 30%; margin-left: auto; margin-right: auto;">
+                <form action="{{ route('site.login') }}" method="post">
+                    @csrf
+                    <input type="text" value="{{ old('usuario') }}" name="usuario" placeholder="Usuario">
+                    {{ $errors->has('usuario') ? $errors->first('usuario') : '' }}
+                    <input type="password" value="{{ old('password') }}" name="password" placeholder="Password">
+                    {{ $errors->has('password') ? $errors->first('password') :'' }}
+                    <button type="submit">Acessar</button>
+                </form>
+                {{ isset($error) && $error != '' ? $error : ''}}
             </div>
         </div>  
     </div>
