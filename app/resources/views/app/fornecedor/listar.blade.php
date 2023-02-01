@@ -14,15 +14,30 @@
             </ul>
         </div>
         <div class="informacao-pagina">
-            <div style="width: 30%; margin-left: auto; margin-right: auto;">
-                <form action="{{ route('app.fornecedor.listar') }}" method="post">
-                    @csrf
-                    <input type="text" name="nome" placeholder="Nome" class="borda-preta">
-                    <input type="text" name="site" placeholder="Site" class="borda-preta">
-                    <input type="text" name="uf" placeholder="UF" class="borda-preta">
-                    <input type="text" name="email" placeholder="E-mail" class="borda-preta">
-                    <button type="submit" class="borda-preta">Pesquisar</button>
-                </form>
+            <div style="width: 90%; margin-left: auto; margin-right: auto;">
+                <table border="1" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Site</th>
+                            <th>UF</th>
+                            <th>E-mail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($fornecedores as $fornecedor)
+                            <tr>
+                                <td>{{ $fornecedor->nome }}</td>
+                                <td>{{ $fornecedor->site }}</td>
+                                <td>{{ $fornecedor->uf }}</td>
+                                <td>{{ $fornecedor->email }}</td>
+                                <td>Adicionar</td>
+                                <td><a href="{{ route('app.fornecedor.editar', $fornecedor->id) }}">Editar</a></td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                {{ $fornecedores->appends($request)->links() }}
             </div>
         </div>
     </div>
