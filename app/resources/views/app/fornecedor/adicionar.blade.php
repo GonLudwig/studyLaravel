@@ -5,7 +5,7 @@
 @section('conteudo')
     <div class="conteudo-pagina">
         <div class="titulo-pagina-app">
-            <p>Fornecedor</p>
+            <p>Fornecedor - Novo</p>
         </div>
         <div class="menu">
             <ul>
@@ -15,13 +15,13 @@
         </div>
         <div class="informacao-pagina">
             <div style="width: 30%; margin-left: auto; margin-right: auto;">
-                <form action="{{ route('app.fornecedor.listar') }}" method="post">
+                <form action="{{ route('app.fornecedor.adicionar') }}" method="post">
                     @csrf
                     <input type="text" name="nome" placeholder="Nome" class="borda-preta">
                     <input type="text" name="site" placeholder="Site" class="borda-preta">
                     <input type="text" name="uf" placeholder="UF" class="borda-preta">
                     <input type="text" name="email" placeholder="E-mail" class="borda-preta">
-                    <button type="submit" class="borda-preta">Pesquisar</button>
+                    <button type="submit" class="borda-preta">Cadastrar</button>
                 </form>
             </div>
         </div>
