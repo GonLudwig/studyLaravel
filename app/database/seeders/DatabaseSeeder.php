@@ -24,7 +24,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             FornecedorSeeder::class,
             MotivoContatoSeeder::class,
-            SiteContatoSeeder::class
+            SiteContatoSeeder::class,
+            UnidadeSeeder::class,
+            ProdutoSeeder::class
         ]);
     }
 }
