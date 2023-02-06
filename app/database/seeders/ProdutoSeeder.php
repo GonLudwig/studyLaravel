@@ -18,7 +18,8 @@ class ProdutoSeeder extends Seeder
             'nome' => 'Geladeira',
             'descricao' => 'Geladeira de gordo',
             'peso' => 60,
-            'unidade_id' => 1
+            'unidade_id' => 1,
+            'fornecedor_id' => 1
         ]);
     }
 }
