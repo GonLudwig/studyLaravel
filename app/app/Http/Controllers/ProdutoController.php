@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fornecedor;
 use App\Models\Produto;
 use App\Models\Unidade;
 use Illuminate\Http\Request;
@@ -29,7 +30,12 @@ class ProdutoController extends Controller
     {
         $unidades = Unidade::all();
 
-        return view('app.produto.create', ['unidades' => $unidades]);
+        $fornecedores = Fornecedor::all([
+            'id',
+            'nome'
+        ]);
+
+        return view('app.produto.create', ['unidades' => $unidades, 'fornecedores' => $fornecedores]);
     }
 
     /**
@@ -44,13 +50,15 @@ class ProdutoController extends Controller
             'nome' => 'required',
             'descricao' => 'required',
             'peso' => 'required|integer',
-            'unidade_id' => 'required|exists:unidades,id'
+            'unidade_id' => 'required|exists:unidades,id',
+            'fornecedor_id' => 'required|exists:fornecedores,id'
         ];
 
         $feedback = [
             'required' => 'O compo :attribute é obrigatorio.',
             'peso.integer' => 'O campo precisa ser um numero inteiro.',
-            'unidade_id.exists' => 'A opção selecionada não existe.'
+            'unidade_id.exists' => 'A opção selecionada não existe.',
+            'fornecedor_id.exists' => 'A opção selecionada não existe.'
         ];
 
         $request->validate($rules, $feedback);
@@ -81,7 +89,16 @@ class ProdutoController extends Controller
     {
         $unidades = Unidade::all();
 
-        return view('app.produto.edit', ['produto' => $produto, 'unidades' => $unidades]);
+        $fornecedores = Fornecedor::all([
+            'id',
+            'nome'
+        ]);
+
+        return view('app.produto.edit', [
+            'produto' => $produto,
+            'unidades' => $unidades,
+            'fornecedores' => $fornecedores
+        ]);
     }
 
     /**
@@ -97,13 +114,15 @@ class ProdutoController extends Controller
             'nome' => 'required',
             'descricao' => 'required',
             'peso' => 'required|integer',
-            'unidade_id' => 'required|exists:unidades,id'
+            'unidade_id' => 'required|exists:unidades,id',
+            'fornecedor_id' => 'required|exists:fornecedores,id'
         ];
 
         $feedback = [
             'required' => 'O compo :attribute é obrigatorio.',
             'peso.integer' => 'O campo precisa ser um numero inteiro.',
-            'unidade_id.exists' => 'A opção selecionada não existe.'
+            'unidade_id.exists' => 'A opção selecionada não existe.',
+            'fornecedor_id.exists' => 'A opção selecionada não existe.'
         ];
 
         $request->validate($rules, $feedback);

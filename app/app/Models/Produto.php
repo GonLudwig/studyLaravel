@@ -13,7 +13,8 @@ class Produto extends Model
         'nome',
         'descricao',
         'peso',
-        'unidade_id'
+        'unidade_id',
+        'fornecedores_id'
     ];
 
     public function produtoDetalhe() {
