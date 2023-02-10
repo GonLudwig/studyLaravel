@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
-use GuzzleHttp\Client;
+use App\Models\Pedido;
 use Illuminate\Http\Request;
 
-class ClienteController extends Controller
+class PedidoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,9 @@ class ClienteController extends Controller
      */
     public function index(Request $request)
     {
-        $clientes = Cliente::simplePaginate(10);
+        $pedidos = Pedido::simplePaginate(10);
 
-        return view('app.cliente.index', ['clientes' => $clientes, 'request' => $request->all()]);
+        return view('app.pedido.index', ['pedidos' => $pedidos, 'request' => $request->all()]);
     }
 
     /**
@@ -27,7 +27,12 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        return view('app.cliente.create');
+        $clientes = Cliente::all([
+            'id',
+            'nome'
+        ]);
+
+        return view('app.pedido.create', ['clientes' => $clientes]);
     }
 
     /**
@@ -39,42 +44,48 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'nome' => 'required|max:50',
+            'cliente_id' => 'required|exists:clientes,id'
         ];
 
         $feedback = [
             'required' => 'O compo :attribute é obrigatorio.',
-            'nome.max' => 'Numero maximo de caracteres excedido.'
+            'fornecedor_id.exists' => 'A opção selecionada não existe.'
         ];
 
         $request->validate($rules, $feedback);
 
-        Cliente::create($request->all());
+        Pedido::create($request->all());
 
-        return redirect()->route('cliente.index');
+        return redirect()->route('pedido.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Cliente  $cliente
+     * @param  \App\Models\Pedido $pedido
      * @return \Illuminate\Http\Response
      */
-    public function show(Cliente $cliente)
+    public function show(Pedido $pedido)
     {
-        return view('app.cliente.show', ['cliente' => $cliente]);
+        return view('app.pedido.show', ['pedido' => $pedido]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Cliente  $cliente
+     * @param  \App\Models\Pedido $pedido
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cliente $cliente)
+    public function edit(Pedido $pedido)
     {
-        return view('app.cliente.edit', [
-            'cliente' => $cliente,
+        $clientes = Cliente::all([
+            'id',
+            'nome'
+        ]);
+
+        return view('app.pedido.edit', [
+            'pedido' => $pedido,
+            'clientes' => $clientes
         ]);
     }
 
@@ -82,37 +93,37 @@ class ClienteController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Cliente  $cliente
+     * @param  \App\Models\Pedido $pedido
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cliente $cliente)
+    public function update(Request $request, Pedido $pedido)
     {
         $rules = [
-            'nome' => 'required|max:50',
+            'cliente_id' => 'required|exists:clientes,id'
         ];
 
         $feedback = [
             'required' => 'O compo :attribute é obrigatorio.',
-            'nome.max' => 'Numero maximo de caracteres excedido.'
+            'fornecedor_id.exists' => 'A opção selecionada não existe.'
         ];
 
         $request->validate($rules, $feedback);
 
-        $cliente->update($request->all());
+        $pedido->update($request->all());
 
-        return redirect()->route('cliente.index', ['cliente' => $cliente]);
+        return redirect()->route('pedido.show', ['pedido' => $pedido]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Cliente  $cliente
+     * @param  \App\Models\Pedido $pedido
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cliente $cliente)
+    public function destroy(Pedido $pedido)
     {
-        $cliente->delete();
+        $pedido->delete();
 
-        return redirect()->route('cliente.index');
+        return redirect()->route('pedido.index');
     }
 }

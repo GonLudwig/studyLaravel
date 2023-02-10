@@ -14,7 +14,7 @@ class Produto extends Model
         'descricao',
         'peso',
         'unidade_id',
-        'fornecedores_id'
+        'fornecedor_id'
     ];
 
     public function produtoDetalhe() {
