@@ -13,7 +13,16 @@ class Pedido extends Model
         'cliente_id'
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
+
     public function cliente() {
-        return $this->belongsTo(\App\Models\Cliente::class);
+        return $this->belongsTo(Cliente::class);
+    }
+
+    public function produtos() {
+        return $this->belongsToMany(Produto::class, 'pedido_produtos')->withPivot('created_at');
     }
 }

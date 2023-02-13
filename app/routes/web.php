@@ -60,8 +60,10 @@ Route::middleware('autenticacao')->prefix('/app')->group(function () {
     Route::resource('cliente', ClienteController::class);
 
     Route::resource('pedido', PedidoController::class);
-    
-    Route::resource('pedido-produto', PedidoProdutoController::class);
+
+    Route::get('pedido-produto/create/{pedido}', [PedidoProdutoController::class, 'create'])->name('pedido-produto.create');
+
+    Route::post('pedido-produto/{pedido}', [PedidoProdutoController::class, 'store'])->name('pedido-produto.store');
 });
 
 Route::get('/rota1/{p1}/{p2}', [Rota1Controller::class, 'teste'])->name('site.rota1');
