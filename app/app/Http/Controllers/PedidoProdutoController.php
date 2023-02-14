@@ -57,10 +57,15 @@ class PedidoProdutoController extends Controller
 
         $request->validate($rules, $feedback);
 
-        PedidoProduto::create([
-            'pedido_id' => $pedido->id,
-            'produto_id' => $request->input('produto_id')
-        ]);
+        // PedidoProduto::create([
+        //     'pedido_id' => $pedido->id,
+        //     'produto_id' => $request->input('produto_id')
+        // ]);
+
+        $pedido->produtos()->attach(
+            $request->input('produto_id'),
+            ['quantidade' => $request->input('quantidade')]
+        );
 
         return redirect()->route('pedido-produto.create', ['pedido' => $pedido->id]);
     }
@@ -102,11 +107,19 @@ class PedidoProdutoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Pedido $pedido
+     * @param  \App\Models\Produto $produto
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Pedido $pedido, Produto $produto)
     {
-        //
+        // PedidoProduto::where([
+        //     'pedido_id' => $pedido->id,
+        //     'produto_id' => $produto->id
+        // ])->delete();
+
+        $pedido->produtos()->detach($produto->id);
+
+        return redirect()->route('pedido-produto.create', [ 'pedido' => $pedido->id]);
     }
 }
