@@ -65,7 +65,7 @@ Route::middleware('autenticacao')->prefix('/app')->group(function () {
 
     Route::post('pedido-produto/{pedido}', [PedidoProdutoController::class, 'store'])->name('pedido-produto.store');
 
-    Route::delete('pedido-produto/{pedido}/{produto}', [PedidoProdutoController::class, 'destroy'])->name('pedido-produto.destroy');
+    Route::delete('pedido-produto/{pedido_id}/{pedidoProduto}', [PedidoProdutoController::class, 'destroy'])->name('pedido-produto.destroy');
 });
 
 Route::get('/rota1/{p1}/{p2}', [Rota1Controller::class, 'teste'])->name('site.rota1');
